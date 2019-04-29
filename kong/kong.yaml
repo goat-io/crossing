@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kong
+  namespace: kong
+spec:
+  template:
+    metadata:
+      labels:
+        name: kong
+        app: kong
+    spec:
+      initContainers:
+      # hack to verify that the DB is up to date or not
+      # TODO remove this for Kong >= 0.15.0
+      - name: wait-for-migrations
+        image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
+        command: [ "/bin/sh", "-c", "kong migrations list" ]
+        env:
+        - name: KONG_ADMIN_LISTEN
+          value: 'off'
+        - name: KONG_PROXY_LISTEN
+          value: 'off'
+        - name: KONG_PROXY_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_ADMIN_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PROXY_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PG_HOST
+          value: postgres
+        - name: KONG_PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kong-secret
+              key: pg_password
+      containers:
+      - name: kong-proxy
+        image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
+        env:
+        - name: KONG_PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kong-secret
+              key: pg_password
+        - name: KONG_PG_HOST
+          value: postgres
+        - name: KONG_PROXY_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PROXY_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_LISTEN
+          value: 'off'
+        - name: KONG_PLUGINS
+          value: "bundled,oidc,kong-http-to-https-redirect"
+        ports:
+        - name: proxy
+          containerPort: 8000
+          protocol: TCP
+        - name: proxy-ssl
+          containerPort: 8443
+          protocol: TCP
+      imagePullSecrets:
+        - name: regcred
+
