@@ -2,9 +2,9 @@ apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: add-ratelimiting-to-route
-  namespace: kong
+  namespace: dummy
 config:
   hour: 100
   limit_by: ip
   second: 10
-plugin: add-ratelimiting-to-route
+plugin: rate-limiting

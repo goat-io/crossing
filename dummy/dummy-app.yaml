@@ -43,8 +43,8 @@ metadata:
   namespace: dummy
   labels:
     app: http-svc
-#  annotations:
-#    plugins.konghq.com: add-ratelimiting-to-route
+  annotations:
+    plugins.konghq.com: add-ratelimiting-to-route, oidc-keycloak
 spec:
   type: NodePort
   ports:

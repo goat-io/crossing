@@ -69,6 +69,8 @@ spec:
           value: 0.0.0.0:8001, 0.0.0.0:8444 ssl
         - name: KONG_PROXY_LISTEN
           value: 'off'
+        - name: KONG_PLUGINS
+          value: "bundled,oidc,kong-http-to-https-redirect"
         ports:
         - name: kong-admin
           containerPort: 8001

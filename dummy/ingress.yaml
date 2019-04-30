@@ -7,10 +7,10 @@ metadata:
     kubernetes.io/ingress.class: "kong"
 spec:
   rules:
-    - host: dummy.35.222.213.192.nip.io
+    - host: 35.222.213.192.nip.io
       http:
         paths:
-          - path: "/"
+          - path: "/dummy"
             backend:
               serviceName: http-svc
               servicePort: http
