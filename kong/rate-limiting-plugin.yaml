@@ -7,4 +7,4 @@ config:
   hour: 100
   limit_by: ip
   second: 10
-plugin: add-ratelimiting-to-route
+plugin: rate-limiting
