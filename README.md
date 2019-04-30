@@ -125,7 +125,7 @@ After a few moments, you should be able to go into your url and path defined in 
 
 ## Adding new APIs
 
-Now that Goat Crossing is configured, adding new API routes and paths is easy as pie! :pie:
+Now that Goat Crossing is configured, adding new API routes and paths is easy as pie! :cake:
 
 All new apps follow the same guidelines:
 * Its own namespace
