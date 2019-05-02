@@ -5,6 +5,6 @@ metadata:
   namespace: dummy
 config:
   client_id: kong
-  client_secret: 3da87d1d-aad3-45ed-b963-49668705c7dd
+  client_secret: b375a7a6-eff8-4739-918d-3eb1531fcb8e
   discovery: https://keycloak.35.193.196.208.nip.io/auth/realms/apps/.well-known/openid-configuration
 plugin: oidc
