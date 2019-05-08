@@ -1,0 +1,43 @@
+apiVersion: kubedb.com/v1alpha1
+kind: MongoDB
+metadata:
+  name: mongo
+  namespace: formio
+spec:
+  version: "4.1.7"
+  replicas: 1
+  replicaSet:
+    name: rs0
+  databaseSecret:
+    secretName: mongo-secret
+  storageType: "Durable"
+  storage:
+    storageClassName: "fast"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  init:
+    scriptSource:
+      configMap:
+        name: mg-init-script
+  monitor:
+    agent: prometheus.io/coreos-operator
+    prometheus:
+      namespace: formio
+      labels:
+        app: kubedb
+      interval: 10s
+  podTemplate:
+    spec:
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+  terminationPolicy: Pause
+  updateStrategy:
+    type: RollingUpdate

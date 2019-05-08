@@ -244,5 +244,3 @@ spec:
                   properties:
                     healthy: *healthy
                     unhealthy: *unhealthy
-
----

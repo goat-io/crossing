@@ -7,10 +7,11 @@ metadata:
     kubernetes.io/ingress.class: "kong"
 spec:
   rules:
-    - host: admin.35.222.213.192.nip.io
-      http:
-        paths:
-          - path: "/"
-            backend:
-              serviceName: kong-ingress-controller
-              servicePort: 8001
+  - host: admin.35.222.213.192.nip.io
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: kong-ingress-controller
+          servicePort: 8001
+  

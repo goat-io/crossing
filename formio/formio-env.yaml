@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: formio-secret
+  namespace: formio
+type: Opaque
+data:
+  MONGO_PORT: 27017
+  MONGO_ROOT_USERNAME: admin
+  MONGO_ROOT_PASSWORD: admin
+  MONGO_DB_USER: user
+  MONGO_DB_PASSWORD: user
+  MONGO_DB_NAME: goat
+  MONGO_DB_HOST: mongo-0.mongo-gvr
+  FORMIO_PROTOCOL: http
+  FORMIO_HOST: formio-http
+  FORMIO_PORT: 3001
+  FORMIO_TEMPLATES_FOLDER: ./Formio/templates
+  PROJECT_TEMPLATE: xinerlink
+  ROOT_EMAIL: admin@example.com
+  ROOT_PASS: admin@example.com
+  MONGO_SECRET: FTFaVuIdSv4Hj2bjnwae
+  MONGO_HIGH_AVAILABILITY: 0
+  JWT_SECRET: CHANGEME
+  JWT_EXPIRE_TIME: 240
+  LB_SKIP_JWT: true
+  SMTP_HOST:
+  SMTP_SSL:
+  SMTP_PORT:
+  SMTP_USER:
+  SMTP_PASS:
+  LABORUM_SCRATHER_VERSION: 0.12
+  SCRATCH_CONTAINERS: 1

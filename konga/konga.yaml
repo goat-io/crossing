@@ -1,0 +1,81 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: konga
+  namespace: kong
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: konga
+        app: konga
+    spec:
+      containers:
+      - name: konga
+        image: pantsel/konga
+        env:
+        - name: DB_ADAPTER
+          value: postgres
+        - name: DB_HOST
+          value: postgres
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: kong-secret
+              key: pg_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kong-secret
+              key: pg_password
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: kong-secret
+              key: pg_db
+        - name: TOKEN_SECRET
+          value: somesecretstring
+        ports:
+        - containerPort: 1337
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: konga-svc
+  namespace: kong
+  labels:
+    app: konga
+spec:
+  type: ClusterIP
+  ports:
+  - name: konga-port
+    protocol: TCP
+    port: 1337
+    targetPort: 1337
+  selector:
+    app: konga
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: konga
+  namespace:  kong
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - konga.35.193.196.208.nip.io
+    secretName: tls-example-konga
+  rules:
+  - host: konga.35.193.196.208.nip.io
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: konga-svc
+          servicePort: konga-port

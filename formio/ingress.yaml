@@ -1,0 +1,80 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: formio-configuration
+  namespace: formio
+upstream:
+  healthchecks:
+    active:
+      concurrency: 10
+      healthy:
+        http_statuses:
+        - 200
+        - 302
+        interval: 0
+        successes: 0
+      http_path: "/"
+      timeout: 1
+      unhealthy:
+        http_failures: 0
+        http_statuses:
+        - 429
+        interval: 0
+        tcp_failures: 0
+        timeouts: 0
+    passive:
+      healthy:
+        http_statuses:
+        - 200
+        successes: 0
+      unhealthy:
+        http_failures: 0
+        http_statuses:
+        - 429
+        - 503
+        tcp_failures: 0
+        timeouts: 0
+    slots: 10
+proxy:
+  name: formio
+  protocol: http
+  host: formio.formio-http.formio-port
+route:
+  paths:
+  - /api/formio
+  hosts:
+  - 35.222.213.192.nip.io
+  - '35.222.213.192'
+  methods:
+  - POST
+  - GET
+  - PUT
+  - DELETE
+  strip_path: true
+  preserve_host: false
+  protocols:
+  - http
+  - https
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: formio
+  namespace: formio
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    # kubernetes.io/ingress.class: "kong"
+    configuration.konghq.com: formio-configuration
+spec:
+  tls:
+  - hosts:
+    - 35.222.213.192.nip.io
+    secretName: tls-example-formio
+  rules:
+  - host: 35.222.213.192.nip.io
+    http:
+      paths:
+      - path: /api/formio
+        backend:
+          serviceName: formio-http
+          servicePort: 3001

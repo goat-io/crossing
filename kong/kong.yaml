@@ -40,6 +40,8 @@ spec:
       - name: kong-proxy
         image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
         env:
+        - name: KONG_X_SESSION_SECRET
+          value: CHANGEME
         - name: KONG_PG_PASSWORD
           valueFrom:
             secretKeyRef:

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-secret
+  namespace: formio
+type: Opaque
+data:
+  user: YWRtaW4=
+  password: YWRtaW4=
