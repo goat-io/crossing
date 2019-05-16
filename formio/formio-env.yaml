@@ -12,9 +12,10 @@ data:
   MONGO_DB_PASSWORD: user
   MONGO_DB_NAME: goat
   MONGO_DB_HOST: mongo-0.mongo-gvr
-  FORMIO_PROTOCOL: http
-  FORMIO_HOST: formio-http
-  FORMIO_PORT: 3001
+  FORMIO_PROTOCOL: https
+  FORMIO_HOST: 35.222.213.192.nip.io
+  FORMIO_PORT: 443
+  FORMIO_BASE_PATH: /api/formio
   FORMIO_TEMPLATES_FOLDER: ./Formio/templates
   PROJECT_TEMPLATE: xinerlink
   ROOT_EMAIL: admin@example.com
@@ -22,6 +23,7 @@ data:
   MONGO_SECRET: FTFaVuIdSv4Hj2bjnwae
   MONGO_HIGH_AVAILABILITY: 0
   JWT_SECRET: CHANGEME
+  JWT_SECRET_BUFFER: ItJkja_3-NgMX-tobf-arXe1eSUzzBQqB_kxqHfPuCcDjNNq_uLqQpHsKwh7k6uUitgpsuKH8rMelB2ApOMfhQ
   JWT_EXPIRE_TIME: 240
   LB_SKIP_JWT: true
   SMTP_HOST:

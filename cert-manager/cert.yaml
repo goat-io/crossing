@@ -1,0 +1,17 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: certificate
+spec:
+  secretName: prod-certificate
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - '*.goatlab.dev'
+  acme:
+    config:
+    - dns01:
+        provider: clouddns
+      domains:
+      - '*.goatlab.dev'

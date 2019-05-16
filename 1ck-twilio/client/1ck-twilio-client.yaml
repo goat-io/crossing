@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twilio-client-svc
+  namespace: 1ck
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: twilio-client-svc
+  template:
+    metadata:
+      labels:
+        app: twilio-client-svc
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: 1ck-twilio-client
+        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/1ck-twilio-client:0.1
+        ports:
+        - name: 1ck-client-port
+          containerPort: 3000
+        env:
+        - name: TWILIO_ACCOUNT_SID
+          valueFrom:
+            secretKeyRef:
+              name: 1ck-secret
+              key: TWILIO_ACCOUNT_SID
+        - name: TWILIO_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: 1ck-secret
+              key: TWILIO_API_KEY
+        - name: TWILIO_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: 1ck-secret
+              key: TWILIO_API_SECRET
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: twilio-client-svc
+  namespace: 1ck
+  labels:
+    app: twilio-client-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: twilio-client-http
+  selector:
+    app: twilio-client-svc

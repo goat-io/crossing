@@ -38,6 +38,6 @@ spec:
         limits:
           memory: "128Mi"
           cpu: "500m"
-  terminationPolicy: Pause
+  terminationPolicy: WipeOut
   updateStrategy:
     type: RollingUpdate

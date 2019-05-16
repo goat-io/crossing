@@ -1,3 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-ingress-controller
+  namespace: kong
+spec:
+  type: NodePort
+  ports:
+  - name: kong-admin
+    port: 8001
+    targetPort: 8001
+    protocol: TCP
+  selector:
+    app: ingress-kong
+
+---
+
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -25,10 +42,10 @@ spec:
     spec:
       serviceAccountName: kong-serviceaccount
       imagePullSecrets:
-        - name: regcred
+      - name: regcred
       initContainers:
       - name: wait-for-migrations
-        image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
+        image: kong:1.1
         command: [ "/bin/sh", "-c", "kong migrations list" ]
         env:
         - name: KONG_ADMIN_LISTEN
@@ -46,19 +63,13 @@ spec:
         - name: KONG_PG_HOST
           value: postgres
         - name: KONG_PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: kong-secret
-              key: pg_password
+          value: kong
       containers:
       - name: admin-api
         image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
         env:
         - name: KONG_PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: kong-secret
-              key: pg_password
+          value: kong
         - name: KONG_PG_HOST
           value: postgres
         - name: KONG_ADMIN_ACCESS_LOG
@@ -99,8 +110,6 @@ spec:
         # the kong URL points to the kong admin api server
         - --kong-url=https://localhost:8444
         - --admin-tls-skip-verify
-        # the default service is the kong proxy service
-        - --default-backend-service=kong/kong-proxy
         # Service from were we extract the IP address/es to use in Ingress status
         - --publish-service=kong/kong-proxy
         env:
@@ -114,7 +123,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller:0.3.0
+        image: kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller:0.4.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -135,24 +144,3 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kong-proxy
-  namespace: kong
-spec:
-  externalTrafficPolicy: Local
-  type: LoadBalancer
-  ports:
-  - name: kong-proxy
-    port: 80
-    targetPort: 8000
-    protocol: TCP
-  - name: kong-proxy-ssl
-    port: 443
-    targetPort: 8443
-    protocol: TCP
-  loadBalancerIP: 35.222.213.192
-  selector:
-    app: kong

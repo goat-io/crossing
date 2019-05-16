@@ -19,8 +19,8 @@ spec:
       - name: regcred
       containers:
       - name: formio
-        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/formio:1.1
-        # imagePullPolicy: Always
+        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/formio:latest
+        imagePullPolicy: Always
         env:
         - name: DEBUG
           value: '*'
@@ -79,6 +79,11 @@ spec:
             secretKeyRef:
               name: formio-secret
               key: FORMIO_PORT
+        - name: FORMIO_BASE_PATH
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: FORMIO_BASE_PATH
         - name: FORMIO_TEMPLATES_FOLDER
           valueFrom:
             secretKeyRef:
@@ -114,6 +119,11 @@ spec:
             secretKeyRef:
               name: formio-secret
               key: JWT_SECRET
+        - name: JWT_SECRET_BUFFER
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: JWT_SECRET_BUFFER
         - name: JWT_EXPIRE_TIME
           valueFrom:
             secretKeyRef:

@@ -4,13 +4,13 @@ metadata:
   name: dummy
   namespace:  dummy
   annotations:
-    kubernetes.io/ingress.class: "kong"
+    kubernetes.io/ingress.class: kong
 spec:
   rules:
     - host: 35.222.213.192.nip.io
       http:
         paths:
-          - path: "/dummy"
+          - path: /dummy
             backend:
               serviceName: http-svc
-              servicePort: http
+              servicePort: 80

@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: entrypoint
+  namespace: kong
+  annotations:
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/force-ssl-redirect: "false"
+spec:
+  tls:
+  - hosts:
+    - '*.goatlab.dev'
+    - 35.222.213.192.nip.io
+    secretName: tls-kong
+  rules:
+  - host: gateway.goatlab.dev
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kong-proxy
+          servicePort: 443
+    

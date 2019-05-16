@@ -51,7 +51,7 @@ route:
   - PUT
   - DELETE
   strip_path: true
-  preserve_host: false
+  preserve_host: true
   protocols:
   - http
   - https
@@ -62,8 +62,8 @@ metadata:
   name: formio
   namespace: formio
   annotations:
-    kubernetes.io/tls-acme: "true"
-    # kubernetes.io/ingress.class: "kong"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: kong
     configuration.konghq.com: formio-configuration
 spec:
   tls:

@@ -1,0 +1,9 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: add-request-transformer
+  namespace: dummy
+config:
+  remove:
+    headers: cookie
+plugin: request-transformer

@@ -14,7 +14,7 @@ spec:
       # hack to verify that the DB is up to date or not
       # TODO remove this for Kong >= 0.15.0
       - name: wait-for-migrations
-        image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
+        image: kong:1.1
         command: [ "/bin/sh", "-c", "kong migrations list" ]
         env:
         - name: KONG_ADMIN_LISTEN
@@ -40,8 +40,6 @@ spec:
       - name: kong-proxy
         image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
         env:
-        - name: KONG_X_SESSION_SECRET
-          value: CHANGEME
         - name: KONG_PG_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -64,6 +62,29 @@ spec:
         - name: proxy-ssl
           containerPort: 8443
           protocol: TCP
+        lifecycle:
+          preStop:
+            exec:
+              command: [ "/bin/sh", "-c", "kong quit" ]
       imagePullSecrets:
         - name: regcred
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-proxy
+  namespace: kong
+spec:
+  type: LoadBalancer
+  ports:
+  - name: kong-proxy
+    port: 80
+    targetPort: 8000
+    protocol: TCP
+  - name: kong-proxy-ssl
+    port: 443
+    targetPort: 8443
+    protocol: TCP
+  loadBalancerIP: 35.222.213.192
+  selector:
+    app: kong

@@ -19,7 +19,8 @@ spec:
       - name: regcred
       containers:
       - name: loopback
-        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/loopback:1.0
+        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/loopback:1.2
+        imagePullPolicy: Always
         env:
         - name: DEBUG
           value: '*'
@@ -48,6 +49,11 @@ spec:
             secretKeyRef:
               name: formio-secret
               key: MONGO_DB_HOST
+        - name: FORMIO_PROTOCOL
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: FORMIO_PROTOCOL
         - name: FORMIO_HOST
           valueFrom:
             secretKeyRef:
@@ -58,6 +64,11 @@ spec:
             secretKeyRef:
               name: formio-secret
               key: FORMIO_PORT
+        - name: FORMIO_BASE_PATH
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: FORMIO_BASE_PATH
         - name: ROOT_EMAIL
           valueFrom:
             secretKeyRef:
@@ -73,6 +84,11 @@ spec:
             secretKeyRef:
               name: formio-secret
               key: JWT_SECRET
+        - name: JWT_SECRET_BUFFER
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: JWT_SECRET_BUFFER
         - name: LB_SKIP_JWT
           valueFrom:
             secretKeyRef:
@@ -92,11 +108,11 @@ metadata:
   labels:
     app: loopback-http
   annotations:
-    plugins.konghq.com: oidc-keycloak
+    plugins.konghq.com: oidc-keycloak, add-request-transformer
 spec:
   ports:
   - name: loopback-port
-    port: 80
+    port: 3000
     targetPort: 3000
     protocol: TCP
   selector:

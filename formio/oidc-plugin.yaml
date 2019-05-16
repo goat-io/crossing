@@ -4,7 +4,10 @@ metadata:
   name: oidc-keycloak
   namespace: formio
 config:
-  client_id: loopback
-  client_secret: 01accea2-5dba-4f9d-8f75-b8a5ce119196
+  client_id: kong
+  client_secret: b375a7a6-eff8-4739-918d-3eb1531fcb8e
   discovery: https://keycloak.35.193.196.208.nip.io/auth/realms/apps/.well-known/openid-configuration
+  access_token_header_name: x-jwt-token
+  disable_userinfo_header: 'yes'
+  disable_id_token_header: 'yes'
 plugin: oidc

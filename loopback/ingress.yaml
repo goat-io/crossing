@@ -1,36 +1,12 @@
-apiVersion: configuration.konghq.com/v1
-kind: KongIngress
-metadata:
-  name: loopback-configuration
-  namespace: formio
-proxy:
-  name: loopback
-  protocol: http
-  host: formio.formio-http.formio-port
-  path: /api
-route:
-  paths:
-  - /loopback
-  methods:
-  - POST
-  - GET
-  - PUT
-  - DELETE
-  strip_path: true
-  preserve_host: false
-  protocols:
-  - http
-  - https
----
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: loopback
   namespace: formio
   annotations:
-    kubernetes.io/tls-acme: "true"
-    ingress.kubernetes.io/force-ssl-redirect: "true"
-    configuration.konghq.com: loopback-configuration
+    certmanager.k8s.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/ingress.class: kong
+    # configuration.konghq.com: formio-configuration
 spec:
   tls:
   - hosts:
@@ -40,7 +16,7 @@ spec:
   - host: 35.222.213.192.nip.io
     http:
       paths:
-      - path: /loopback
+      - path: /api/loopback
         backend:
           serviceName: loopback-http
-          servicePort: loopback-port
+          servicePort: 3000
