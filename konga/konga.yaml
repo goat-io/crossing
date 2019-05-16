@@ -63,7 +63,7 @@ metadata:
   name: konga
   namespace:  kong
   annotations:
-    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    certmanager.k8s.io/cluster-issuer: letsencrypt-staging
     kubernetes.io/ingress.class: "nginx"
     ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:

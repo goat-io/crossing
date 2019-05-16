@@ -5,5 +5,6 @@ metadata:
   namespace: dummy
 config:
   remove:
-    headers: cookie
+    headers:
+      - cookie
 plugin: request-transformer

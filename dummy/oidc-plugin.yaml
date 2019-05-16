@@ -5,9 +5,9 @@ metadata:
   namespace: dummy
 config:
   client_id: kong
-  client_secret: b375a7a6-eff8-4739-918d-3eb1531fcb8e
+  client_secret: 4a871543-8546-45df-9b8d-00bd09939253
   discovery: https://keycloak.35.193.196.208.nip.io/auth/realms/apps/.well-known/openid-configuration
   access_token_header_name: x-jwt-token
-  disable_userinfo_header: 'yes'
-  disable_id_token_header: 'yes'
+  disable_userinfo_header: "yes"
+  disable_id_token_header: "yes"
 plugin: oidc

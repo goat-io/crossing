@@ -16,172 +16,172 @@ spec:
         app: formio-http
     spec:
       imagePullSecrets:
-      - name: regcred
+        - name: regcred
       containers:
-      - name: formio
-        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/formio:latest
-        imagePullPolicy: Always
-        env:
-        - name: DEBUG
-          value: '*'
-        - name: TEMPLATE
-          valueFrom:
-            configMapKeyRef:
-              name: template
-              key: template
-        - name: MONGO_PORT
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_PORT
-        - name: MONGO_ROOT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_ROOT_USERNAME
-        - name: MONGO_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_ROOT_PASSWORD
-        - name: MONGO_DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_DB_USER
-        - name: MONGO_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_DB_PASSWORD
-        - name: MONGO_DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_DB_NAME
-        - name: MONGO_DB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_DB_HOST
-        - name: FORMIO_PROTOCOL
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: FORMIO_PROTOCOL
-        - name: FORMIO_HOST
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: FORMIO_HOST
-        - name: FORMIO_PORT
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: FORMIO_PORT
-        - name: FORMIO_BASE_PATH
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: FORMIO_BASE_PATH
-        - name: FORMIO_TEMPLATES_FOLDER
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: FORMIO_TEMPLATES_FOLDER
-        - name: PROJECT_TEMPLATE
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: PROJECT_TEMPLATE
-        - name: ROOT_EMAIL
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: ROOT_EMAIL
-        - name: ROOT_PASS
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: ROOT_PASS
-        - name: MONGO_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_SECRET
-        - name: MONGO_HIGH_AVAILABILITY
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: MONGO_HIGH_AVAILABILITY
-        - name: JWT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: JWT_SECRET
-        - name: JWT_SECRET_BUFFER
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: JWT_SECRET_BUFFER
-        - name: JWT_EXPIRE_TIME
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: JWT_EXPIRE_TIME
-        - name: LB_SKIP_JWT
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: LB_SKIP_JWT
-        - name: SMTP_HOST
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: SMTP_HOST
-        - name: SMTP_SSL
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key:  SMTP_SSL
-        - name: SMTP_PORT
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: SMTP_PORT
-        - name: SMTP_USER
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: SMTP_USER
-        - name: SMTP_PASS
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: SMTP_PASS
-        - name: LABORUM_SCRATHER_VERSION
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: LABORUM_SCRATHER_VERSION
-        - name: SCRATCH_CONTAINERS
-          valueFrom:
-            secretKeyRef:
-              name: formio-secret
-              key: SCRATCH_CONTAINERS
-        - name: MONGO
-          value: mongodb://$(MONGO_DB_USER):$(MONGO_DB_PASSWORD)@$(MONGO_DB_HOST):$(MONGO_PORT)/$(MONGO_DB_NAME)
-        - name: WAIT_HOSTS
-          value: $(MONGO_DB_HOST):$(MONGO_PORT)
-        - name: WAIT_HOSTS_TIMEOUT
-          value: "120"
-        - name: WAIT_AFTER_HOSTS
-          value: "20"
-        - name: WAIT_SLEEP_INTERVAL
-          value: "10"
-        ports:
-        - name: http
-          containerPort: 3001
+        - name: formio
+          image: registry.gitlab.com/goatlab/corporate/moutain/mountain/formio:latest
+          imagePullPolicy: Always
+          env:
+            - name: DEBUG
+              value: "*"
+            - name: TEMPLATE
+              valueFrom:
+                configMapKeyRef:
+                  name: template
+                  key: template
+            - name: MONGO_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_PORT
+            - name: MONGO_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_ROOT_USERNAME
+            - name: MONGO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_ROOT_PASSWORD
+            - name: MONGO_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_USER
+            - name: MONGO_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_PASSWORD
+            - name: MONGO_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_NAME
+            - name: MONGO_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_HOST
+            - name: FORMIO_PROTOCOL
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_PROTOCOL
+            - name: FORMIO_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_HOST
+            - name: FORMIO_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_PORT
+            - name: FORMIO_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_BASE_PATH
+            - name: FORMIO_TEMPLATES_FOLDER
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_TEMPLATES_FOLDER
+            - name: PROJECT_TEMPLATE
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: PROJECT_TEMPLATE
+            - name: ROOT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: ROOT_EMAIL
+            - name: ROOT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: ROOT_PASS
+            - name: MONGO_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_SECRET
+            - name: MONGO_HIGH_AVAILABILITY
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_HIGH_AVAILABILITY
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: JWT_SECRET
+            - name: JWT_SECRET_BUFFER
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: JWT_SECRET_BUFFER
+            - name: JWT_EXPIRE_TIME
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: JWT_EXPIRE_TIME
+            - name: LB_SKIP_JWT
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: LB_SKIP_JWT
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: SMTP_HOST
+            - name: SMTP_SSL
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: SMTP_SSL
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: SMTP_PORT
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: SMTP_USER
+            - name: SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: SMTP_PASS
+            - name: LABORUM_SCRATHER_VERSION
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: LABORUM_SCRATHER_VERSION
+            - name: SCRATCH_CONTAINERS
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: SCRATCH_CONTAINERS
+            - name: MONGO
+              value: mongodb://$(MONGO_DB_USER):$(MONGO_DB_PASSWORD)@$(MONGO_DB_HOST):$(MONGO_PORT)/$(MONGO_DB_NAME)
+            - name: WAIT_HOSTS
+              value: $(MONGO_DB_HOST):$(MONGO_PORT)
+            - name: WAIT_HOSTS_TIMEOUT
+              value: "120"
+            - name: WAIT_AFTER_HOSTS
+              value: "20"
+            - name: WAIT_SLEEP_INTERVAL
+              value: "10"
+          ports:
+            - name: http
+              containerPort: 3001
 ---
 apiVersion: v1
 kind: Service
@@ -190,14 +190,12 @@ metadata:
   namespace: formio
   labels:
     app: formio-http
-  annotations:
-    plugins.konghq.com: add-ratelimiting-to-route, oidc-keycloak
 spec:
   ports:
-  - name: formio-port
-    port: 3001
-    targetPort: http
-    protocol: TCP
+    - name: formio-port
+      port: 3001
+      targetPort: http
+      protocol: TCP
   selector:
     app: formio-http
   type: NodePort

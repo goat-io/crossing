@@ -6,15 +6,14 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: kong-admin
-    port: 8001
-    targetPort: 8001
-    protocol: TCP
+    - name: kong-admin
+      port: 8001
+      targetPort: 8001
+      protocol: TCP
   selector:
     app: ingress-kong
 
 ---
-
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -42,105 +41,106 @@ spec:
     spec:
       serviceAccountName: kong-serviceaccount
       imagePullSecrets:
-      - name: regcred
+        - name: regcred
       initContainers:
-      - name: wait-for-migrations
-        image: kong:1.1
-        command: [ "/bin/sh", "-c", "kong migrations list" ]
-        env:
-        - name: KONG_ADMIN_LISTEN
-          value: 'off'
-        - name: KONG_PROXY_LISTEN
-          value: 'off'
-        - name: KONG_PROXY_ACCESS_LOG
-          value: "/dev/stdout"
-        - name: KONG_ADMIN_ACCESS_LOG
-          value: "/dev/stdout"
-        - name: KONG_PROXY_ERROR_LOG
-          value: "/dev/stderr"
-        - name: KONG_ADMIN_ERROR_LOG
-          value: "/dev/stderr"
-        - name: KONG_PG_HOST
-          value: postgres
-        - name: KONG_PG_PASSWORD
-          value: kong
+        - name: wait-for-migrations
+          image: kong:1.1
+          command: ["/bin/sh", "-c", "kong migrations list"]
+          env:
+            - name: KONG_ADMIN_LISTEN
+              value: "off"
+            - name: KONG_PROXY_LISTEN
+              value: "off"
+            - name: KONG_PROXY_ACCESS_LOG
+              value: "/dev/stdout"
+            - name: KONG_ADMIN_ACCESS_LOG
+              value: "/dev/stdout"
+            - name: KONG_PROXY_ERROR_LOG
+              value: "/dev/stderr"
+            - name: KONG_ADMIN_ERROR_LOG
+              value: "/dev/stderr"
+            - name: KONG_PG_HOST
+              value: postgres
+            - name: KONG_PG_PASSWORD
+              value: kong
       containers:
-      - name: admin-api
-        image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
-        env:
-        - name: KONG_PG_PASSWORD
-          value: kong
-        - name: KONG_PG_HOST
-          value: postgres
-        - name: KONG_ADMIN_ACCESS_LOG
-          value: /dev/stdout
-        - name: KONG_ADMIN_ERROR_LOG
-          value: /dev/stderr
-        - name: KONG_ADMIN_LISTEN
-          value: 0.0.0.0:8001, 0.0.0.0:8444 ssl
-        - name: KONG_PROXY_LISTEN
-          value: 'off'
-        - name: KONG_PLUGINS
-          value: "bundled,oidc,kong-http-to-https-redirect"
-        ports:
-        - name: kong-admin
-          containerPort: 8001
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /status
-            port: 8001
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /status
-            port: 8001
-            scheme: HTTP
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
-      - name: ingress-controller
-        args:
-        - /kong-ingress-controller
-        # the kong URL points to the kong admin api server
-        - --kong-url=https://localhost:8444
-        - --admin-tls-skip-verify
-        # Service from were we extract the IP address/es to use in Ingress status
-        - --publish-service=kong/kong-proxy
-        env:
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-        image: kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller:0.4.0
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /healthz
-            port: 10254
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /healthz
-            port: 10254
-            scheme: HTTP
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
+        - name: admin-api
+          image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
+          env:
+            - name: KONG_PG_PASSWORD
+              value: kong
+            - name: KONG_PG_HOST
+              value: postgres
+            - name: KONG_ADMIN_ACCESS_LOG
+              value: /dev/stdout
+            - name: KONG_ADMIN_ERROR_LOG
+              value: /dev/stderr
+            - name: KONG_ADMIN_LISTEN
+              value: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+            - name: KONG_PROXY_LISTEN
+              value: "off"
+            - name: KONG_PLUGINS
+              value: "bundled,oidc,kong-http-to-https-redirect"
+          ports:
+            - name: kong-admin
+              containerPort: 8001
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /status
+              port: 8001
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /status
+              port: 8001
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+        - name: ingress-controller
+          args:
+            - /kong-ingress-controller
+            # the kong URL points to the kong admin api server
+            - --kong-url=https://localhost:8444
+            - --admin-tls-skip-verify
+            # Service from were we extract the IP address/es to use in Ingress status
+            - --publish-service=kong/kong-proxy
+            - --v=6
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+          image: kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller:0.4.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1

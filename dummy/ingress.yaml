@@ -2,9 +2,10 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: dummy
-  namespace:  dummy
+  namespace: dummy
   annotations:
     kubernetes.io/ingress.class: kong
+    plugins.konghq.com: oidc-keycloak, add-request-transformer
 spec:
   rules:
     - host: 35.222.213.192.nip.io
