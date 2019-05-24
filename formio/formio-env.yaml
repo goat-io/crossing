@@ -13,9 +13,10 @@ data:
   MONGO_DB_NAME: goat
   MONGO_DB_HOST: mongo-0.mongo-gvr
   FORMIO_PROTOCOL: https
-  FORMIO_HOST: 35.222.213.192.nip.io
+  FORMIO_HOST: gateway.goatlab.dev
   FORMIO_PORT: 443
   FORMIO_BASE_PATH: /api/formio
+  FORMIO_VERSION: v1.46.0
   FORMIO_TEMPLATES_FOLDER: ./Formio/templates
   PROJECT_TEMPLATE: xinerlink
   ROOT_EMAIL: admin@example.com
@@ -25,7 +26,7 @@ data:
   JWT_SECRET: CHANGEME
   JWT_SECRET_BUFFER: LaXS1wm_8haNlHpXqF-x4Ou1M5V2TdMGZpixQsjUeBbWGsJFihKOobKFWgU9kZUrzhZr_GPHJdOVw9ssCtdB5A
   JWT_EXPIRE_TIME: 240
-  LB_SKIP_JWT: true
+  LB_SKIP_JWT: false
   SMTP_HOST:
   SMTP_SSL:
   SMTP_PORT:
@@ -33,3 +34,8 @@ data:
   SMTP_PASS:
   LABORUM_SCRATHER_VERSION: 0.12
   SCRATCH_CONTAINERS: 1
+  KEYCLOAK_ENABLED: true
+  KEYCLOAK_URL: https://keycloak.goatlab.dev
+  KEYCLOAK_CLIENT_ID: kong
+  KEYCLOAK_SECRET: 4a871543-8546-45df-9b8d-00bd09939253
+  KEYCLOAK_REALM: apps

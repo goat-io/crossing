@@ -22,8 +22,8 @@ spec:
         image: registry.gitlab.com/goatlab/corporate/moutain/mountain/loopback:1.2
         imagePullPolicy: Always
         env:
-        - name: DEBUG
-          value: '*'
+        # - name: DEBUG
+        #   value: '*'
         - name: MONGO_PORT
           valueFrom:
             secretKeyRef:
@@ -94,6 +94,31 @@ spec:
             secretKeyRef:
               name: formio-secret
               key: LB_SKIP_JWT
+        - name: KEYCLOAK_ENABLED
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: KEYCLOAK_ENABLED
+        - name: KEYCLOAK_URL
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: KEYCLOAK_URL
+        - name: KEYCLOAK_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: KEYCLOAK_CLIENT_ID
+        - name: KEYCLOAK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: KEYCLOAK_SECRET
+        - name: KEYCLOAK_REALM
+          valueFrom:
+            secretKeyRef:
+              name: formio-secret
+              key: KEYCLOAK_REALM
         - name: MONGO_CONNECTION
           value: mongodb://$(MONGO_DB_USER):$(MONGO_DB_PASSWORD)@$(MONGO_DB_HOST):$(MONGO_PORT)/$(MONGO_DB_NAME)
         ports:
@@ -106,9 +131,9 @@ metadata:
   name: loopback-http
   namespace: formio
   labels:
-    app: loopback-http
+    app: loopback-http 
   annotations:
-    plugins.konghq.com: oidc-keycloak, add-request-transformer
+    configuration.konghq.com: loopback-configuration
 spec:
   ports:
   - name: loopback-port

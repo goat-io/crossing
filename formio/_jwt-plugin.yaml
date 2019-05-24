@@ -1,0 +1,26 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: api-consumer
+  namespace: formio
+username: api-consumer-jwt
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongCredential
+metadata:
+  name: api-jwt-credential
+  namespace: formio 
+consumerRef: api-consumer
+type: jwt
+config:
+  key: https://keycloak.goatlab.dev/auth/realms/apps
+  secret: LaXS1wm_8haNlHpXqF-x4Ou1M5V2TdMGZpixQsjUeBbWGsJFihKOobKFWgU9kZUrzhZr_GPHJdOVw9ssCtdB5A
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: jwt-plugin
+  namespace: formio
+config:
+  secret_is_base64: true
+plugin: jwt

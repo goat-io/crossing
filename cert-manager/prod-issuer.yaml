@@ -10,13 +10,13 @@ spec:
     email: tomas.castro@goatlab.io
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: letsencrypt-clouddns
     # Enable the DNS-01 challenge provider
     dns01:
       providers:
       - name: clouddns
         clouddns:
           serviceAccountSecretRef:
-            name: clouddns
-            key: clouddns.key.json
+            name: dns-svc-acct
+            key: creds
           project: named-griffin-235117

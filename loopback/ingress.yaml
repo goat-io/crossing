@@ -4,16 +4,16 @@ metadata:
   name: loopback
   namespace: formio
   annotations:
-    certmanager.k8s.io/cluster-issuer: letsencrypt-staging
     kubernetes.io/ingress.class: kong
-    # configuration.konghq.com: formio-configuration
+    plugins.konghq.com: add-request-transformer, oidc-keycloak
+    # configuration.konghq.com: loopback-configuration
 spec:
   tls:
   - hosts:
-    - 35.222.213.192.nip.io
-    secretName: tls-example-loopback
+    - gateway.goatlab.dev
+    secretName: letsencrypt-clouddns
   rules:
-  - host: 35.222.213.192.nip.io
+  - host: gateway.goatlab.dev
     http:
       paths:
       - path: /api/loopback

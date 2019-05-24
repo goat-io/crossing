@@ -64,6 +64,11 @@ spec:
                 secretKeyRef:
                   name: formio-secret
                   key: MONGO_DB_HOST
+            - name: FORMIO_VERSION
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_VERSION
             - name: FORMIO_PROTOCOL
               valueFrom:
                 secretKeyRef:

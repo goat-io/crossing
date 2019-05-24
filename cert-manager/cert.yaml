@@ -3,7 +3,7 @@ kind: Certificate
 metadata:
   name: certificate
 spec:
-  secretName: prod-certificate
+  secretName: letsencrypt-clouddns
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer

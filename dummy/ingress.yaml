@@ -7,8 +7,12 @@ metadata:
     kubernetes.io/ingress.class: kong
     plugins.konghq.com: oidc-keycloak, add-request-transformer
 spec:
+  tls:
+  - hosts:
+    - gateway.goatlab.dev
+    secretName: letsencrypt-clouddns
   rules:
-    - host: 35.222.213.192.nip.io
+    - host: gateway.goatlab.dev
       http:
         paths:
           - path: /dummy
