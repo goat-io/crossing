@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-secret
+  namespace: formio
+type: Opaque
+data:
+  keycloak_user: admin
+  keycloak_password: admin
+  PG_DB_USER: keycloak
+  PG_DB_PASSWORD: keycloakpassword
+  PG_DB_NAME: keycloak_db
+  PG_SERVICE_NAME: pg-keycloak
+  PG_NAMESPACE: keycloak

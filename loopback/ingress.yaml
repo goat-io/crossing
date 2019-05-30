@@ -1,3 +1,17 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: loopback-configuration
+  namespace: formio
+proxy:
+  path: /api
+route:
+  preserve_host: true
+  strip_path: true
+  protocols:
+  - http
+  - https
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -6,7 +20,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
     plugins.konghq.com: add-request-transformer, oidc-keycloak
-    # configuration.konghq.com: loopback-configuration
+    configuration.konghq.com: loopback-configuration
 spec:
   tls:
   - hosts:

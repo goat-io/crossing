@@ -6,5 +6,5 @@ metadata:
 config:
   remove:
     headers:
-    - cookie
+      - cookie
 plugin: request-transformer

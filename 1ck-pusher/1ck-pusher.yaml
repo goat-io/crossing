@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pusher-1ck-svc
+  namespace: 1ck
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pusher-1ck-svc
+  template:
+    metadata:
+      labels:
+        app: pusher-1ck-svc
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: 1ck-pusher
+        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/1ck-pusher:0.1
+        imagePullPolicy: Always
+        ports:
+        - name: pusher-1ck-port
+          containerPort: 3000
+        env:
+        - name: PUSHER_CHAT_INSTANCE_LOCATOR
+          valueFrom:
+            secretKeyRef:
+              name: 1ck-secret
+              key: PUSHER_CHAT_INSTANCE_LOCATOR
+        - name: PUSHER_CHAT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: 1ck-secret
+              key: PUSHER_CHAT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pusher-1ck-svc
+  namespace: 1ck
+  labels:
+    app: pusher-1ck-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: pusher-http
+  selector:
+    app: pusher-1ck-svc

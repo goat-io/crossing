@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: 1ck-secret
+  namespace: 1ck
+type: Opaque
+data:
+  PUSHER_CHAT_INSTANCE_LOCATOR: djE6dXMxOjBkMmNlZTc0LWEwMWQtNDZiYy05MmNhLWJmMTEwYTc2NDJiZA==
+  PUSHER_CHAT_KEY: MjA2MWJkNGItZjlkZS00MjYwLWJhMjktNDMxMDFlOWI5OWNkOm5YZWVYZm9uUmdlOTRLeFdsMHo0a2o1dk5CLzZNdzk2cDcrU2VDcDFrbzQ9

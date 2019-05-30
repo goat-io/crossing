@@ -1,3 +1,15 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: formio-configuration
+  namespace: formio
+route:
+  preserve_host: true
+  strip_path: true
+  protocols:
+  - http
+  - https
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -5,7 +17,7 @@ metadata:
   namespace: formio
   annotations:
     kubernetes.io/ingress.class: kong
-    # configuration.konghq.com: formio-configuration
+    configuration.konghq.com: formio-configuration
     plugins.konghq.com: add-request-transformer, oidc-keycloak
 spec:
   tls:

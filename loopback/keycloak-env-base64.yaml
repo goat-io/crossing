@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-secret
+  namespace: formio
+type: Opaque
+data:
+  keycloak_user: YWRtaW4=
+  keycloak_password: YWRtaW4=
+  PG_DB_USER: a2V5Y2xvYWs=
+  PG_DB_PASSWORD: a2V5Y2xvYWtwYXNzd29yZA==
+  PG_DB_NAME: a2V5Y2xvYWtfZGI=
+  PG_SERVICE_NAME: cGcta2V5Y2xvYWs=
+  PG_NAMESPACE: a2V5Y2xvYWs=

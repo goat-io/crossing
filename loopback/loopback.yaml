@@ -119,6 +119,33 @@ spec:
             secretKeyRef:
               name: formio-secret
               key: KEYCLOAK_REALM
+        - name: PG_SERVICE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: PG_SERVICE_NAME
+        - name: PG_NAMESPACE
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: PG_NAMESPACE
+        - name: PG_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: PG_DB_USER
+        - name: PG_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: PG_DB_PASSWORD
+        - name: PG_DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: PG_DB_NAME
+        - name: PG_URL
+          value: $(PG_SERVICE_NAME).$(PG_NAMESPACE)
         - name: MONGO_CONNECTION
           value: mongodb://$(MONGO_DB_USER):$(MONGO_DB_PASSWORD)@$(MONGO_DB_HOST):$(MONGO_PORT)/$(MONGO_DB_NAME)
         ports:
