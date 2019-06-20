@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: push-notifications-svc
+  namespace: push-notifications
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: push-notifications-svc
+  template:
+    metadata:
+      labels:
+        app: push-notifications-svc
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: push-notifications-server
+          image: registry.gitlab.com/goatlab/corporate/moutain/mountain/push-notifications-server:0.4
+          imagePullPolicy: Always
+          ports:
+            - name: push-port
+              containerPort: 3000
+          env:
+            - name: PUSHER_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: push-notifications-secret
+                  key: PUSHER_WEBHOOK_SECRET
+            - name: PUSHER_CHAT_INSTANCE_LOCATOR
+              valueFrom:
+                secretKeyRef:
+                  name: push-notifications-secret
+                  key: PUSHER_CHAT_INSTANCE_LOCATOR
+            - name: PUSHER_CHAT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: push-notifications-secret
+                  key: PUSHER_CHAT_KEY
+            - name: KEYCLOAK_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: push-notifications-secret
+                  key: KEYCLOAK_TOKEN_SECRET
+            - name: LOOPBACK_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: push-notifications-secret
+                  key: LOOPBACK_BASE_URL
+            - name: MONGO_DB_USER
+              value: user
+            - name: MONGO_DB_PASSWORD
+              value: Pepito.P0
+            - name: MONGO_DB_NAME
+              value: push-notifications
+            - name: DATABASE_URI
+              value: mongodb://$(MONGO_DB_USER):$(MONGO_DB_PASSWORD)@mongo-0.mongo-gvr:27017/$(MONGO_DB_NAME)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: push-notifications-svc
+  namespace: push-notifications
+  labels:
+    app: push-notifications-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: push-http
+  selector:
+    app: push-notifications-svc

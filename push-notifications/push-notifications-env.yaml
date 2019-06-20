@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: 1ck-secret
-  namespace: 1ck
+  name: push-notifications-secret
+  namespace: push-notifications
 type: Opaque
 data:
+  PUSHER_WEBHOOK_SECRET: pusher-goat-super-secret-awesome-key
   PUSHER_CHAT_INSTANCE_LOCATOR: v1:us1:0d2cee74-a01d-46bc-92ca-bf110a7642bd
   PUSHER_CHAT_KEY: 2061bd4b-f9de-4260-ba29-43101e9b99cd:nXeeXfonRge94KxWl0z4kj5vNB/6Mw96p7+SeCp1ko4=
   KEYCLOAK_TOKEN_SECRET: LaXS1wm_8haNlHpXqF-x4Ou1M5V2TdMGZpixQsjUeBbWGsJFihKOobKFWgU9kZUrzhZr_GPHJdOVw9ssCtdB5A
+  LOOPBACK_BASE_URL: https://gateway.goatlab.dev/api/loopback

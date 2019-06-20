@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: upload-secret
+  namespace: upload
+type: Opaque
+data:
+  PORT: NDEwMA==
+  DEBUG: Kg==
+  UPLOAD_DIR: MWNr
+  PROVIDERS: Z29vZ2xl
+  GOOGLE_CLOUD_PROJECT_ID: bmFtZWQtZ3JpZmZpbi0yMzUxMTc=
+  GOOGLE_CLOUD_BUCKET_NAME: Z29hdGxhYi1kZXYtdXBsb2Fkcw==

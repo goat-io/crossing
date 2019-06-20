@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: upload-secret
+  namespace: upload
+type: Opaque
+data:
+  PORT: 4100
+  DEBUG: "*"
+  UPLOAD_DIR: 1ck
+  PROVIDERS: google
+  GOOGLE_CLOUD_PROJECT_ID: named-griffin-235117
+  GOOGLE_CLOUD_BUCKET_NAME: goatlab-dev-uploads

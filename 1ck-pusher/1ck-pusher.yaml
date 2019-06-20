@@ -17,7 +17,7 @@ spec:
       - name: regcred
       containers:
       - name: 1ck-pusher
-        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/1ck-pusher:0.1
+        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/1ck-pusher:0.2
         imagePullPolicy: Always
         ports:
         - name: pusher-1ck-port
@@ -33,6 +33,11 @@ spec:
             secretKeyRef:
               name: 1ck-secret
               key: PUSHER_CHAT_KEY
+        - name: KEYCLOAK_TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: 1ck-secret
+              key: KEYCLOAK_TOKEN_SECRET
 ---
 apiVersion: v1
 kind: Service

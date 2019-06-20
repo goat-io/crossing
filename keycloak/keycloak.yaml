@@ -7,10 +7,10 @@ metadata:
     app: keycloak-http
 spec:
   ports:
-  - name: http
-    port: 8080
-    targetPort: 8080
-    protocol: TCP
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
   selector:
     app: keycloak-http
   type: NodePort
@@ -31,56 +31,58 @@ spec:
         app: keycloak-http
     spec:
       containers:
-      - name: keycloak
-        image: jboss/keycloak:latest
-        imagePullPolicy: IfNotPresent
-        resources:
-          requests:
-            cpu: 200m
-            memory: 256Mi
-          limits:
-            cpu: 400m
-            memory: 512Mi
-        env:
-        - name: KEYCLOAK_USER
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-secret
-              key: keycloak_user
-        - name: KEYCLOAK_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-secret
-              key: keycloak_password
-        - name: PROXY_ADDRESS_FORWARDING
-          value: "true"
-        - name: KEYCLOAK_LOGLEVEL
-          value: "DEBUG"
-        - name: DB_VENDOR
-          value: "postgres"
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-secret
-              key: pg_user
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-secret
-              key: pg_password
-        - name: DB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-secret
-              key: pg_db
-        - name: DB_ADDR
-          value: pg-keycloak
-        - name: DB_PORT
-          value: "5432"
-        ports:
-        - name: http
-          containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /auth/realms/master
-            port: 8080
+        - name: keycloak
+          image: jboss/keycloak:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 400m
+              memory: 512Mi
+            limits:
+              cpu: 800m
+              memory: 1Gi
+          env:
+            - name: KEYCLOAK_USER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: keycloak_user
+            - name: KEYCLOAK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: keycloak_password
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            - name: KEYCLOAK_LOGLEVEL
+              value: "ALL"
+            - name: ROOT_LOGLEVEL
+              value: "DEBUG"
+            - name: DB_VENDOR
+              value: "postgres"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: pg_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: pg_password
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: pg_db
+            - name: DB_ADDR
+              value: pg-keycloak
+            - name: DB_PORT
+              value: "5432"
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /auth/realms/master
+              port: 8080

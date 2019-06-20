@@ -7,7 +7,7 @@ config:
   client_id: kong
   client_secret: 4a871543-8546-45df-9b8d-00bd09939253
   discovery: https://keycloak.goatlab.dev/auth/realms/apps/.well-known/openid-configuration
-  access_token_header_name: x-jwt-token
+  access_token_header_name: Authorization
   access_token_header_as_bearer: "yes"
   introspection_endpoint: https://keycloak.goatlab.dev/auth/realms/apps/protocol/openid-connect/token/introspect
   disable_userinfo_header: "yes"

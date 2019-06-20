@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-secret
+  namespace: push-notifications
+type: Opaque
+data:
+  user: YWRtaW4=
+  password: UGVwaXRvLlAw

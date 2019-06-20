@@ -1,0 +1,14 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: cors
+  namespace: formio
+config:
+  origins:
+  - '*'
+  headers:
+  - Origin
+  - Authorization
+  - 'x-jwt-token'
+  # exposed_headers: 'Access-Control-Allow-Headers, Access-Control-Allow-Origin'
+plugin: cors

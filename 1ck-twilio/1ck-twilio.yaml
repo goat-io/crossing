@@ -17,7 +17,7 @@ spec:
       - name: regcred
       containers:
       - name: 1ck-twilio
-        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/1ck-twilio:0.2
+        image: registry.gitlab.com/goatlab/corporate/moutain/mountain/1ck-twilio:0.3
         imagePullPolicy: Always
         ports:
         - name: twilio-1ck-port
@@ -26,23 +26,28 @@ spec:
         - name: TWILIO_ACCOUNT_SID
           valueFrom:
             secretKeyRef:
-              name: 1ck-secret
+              name: 1ck-twilio-secret
               key: TWILIO_ACCOUNT_SID
         - name: TWILIO_SERVICE_SID
           valueFrom:
             secretKeyRef:
-              name: 1ck-secret
+              name: 1ck-twilio-secret
               key: TWILIO_SERVICE_SID
         - name: TWILIO_API_KEY
           valueFrom:
             secretKeyRef:
-              name: 1ck-secret
+              name: 1ck-twilio-secret
               key: TWILIO_API_KEY
         - name: TWILIO_API_SECRET
           valueFrom:
             secretKeyRef:
-              name: 1ck-secret
+              name: 1ck-twilio-secret
               key: TWILIO_API_SECRET
+        - name: KEYCLOAK_TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: 1ck-twilio-secret
+              key: KEYCLOAK_TOKEN_SECRET
 ---
 apiVersion: v1
 kind: Service

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: 1ck-secret
+  name: 1ck-twilio-secret
   namespace: 1ck
 type: Opaque
 data:
@@ -9,3 +9,4 @@ data:
   TWILIO_API_KEY: SK079c85cb906fc1128552b0496369d68c
   TWILIO_API_SECRET: PZ6sUmiQTzzHgpPr0ha9avjSnikxkJqU
   TWILIO_SERVICE_SID: IS3547e1b418614e80b49be20651eaa08c
+  KEYCLOAK_TOKEN_SECRET: LaXS1wm_8haNlHpXqF-x4Ou1M5V2TdMGZpixQsjUeBbWGsJFihKOobKFWgU9kZUrzhZr_GPHJdOVw9ssCtdB5A
