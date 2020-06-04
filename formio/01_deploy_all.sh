@@ -1,6 +1,5 @@
 #!/bin/bash
 kubectl apply -f namespace.yaml
-kubectl -n formio create secret generic regcred --from-file=.dockerconfigjson=/home/tcastrog10/.docker/config.json --type=kubernetes.io/dockerconfigjson
 kubectl -n formio create configmap template --from-file=template=1ck.template.json
 kubectl -n formio create configmap mg-init-script --from-file=init.js
 

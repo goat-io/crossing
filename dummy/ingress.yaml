@@ -8,11 +8,11 @@ metadata:
     plugins.konghq.com: oidc-keycloak, add-request-transformer
 spec:
   tls:
-  - hosts:
-    - gateway.goatlab.dev
-    secretName: letsencrypt-clouddns
+    - hosts:
+        - gateway.oneclinick.com
+      secretName: letsencrypt-clouddns
   rules:
-    - host: gateway.goatlab.dev
+    - host: gateway.oneclinick.com
       http:
         paths:
           - path: /dummy

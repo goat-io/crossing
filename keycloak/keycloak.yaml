@@ -33,6 +33,9 @@ spec:
       containers:
         - name: keycloak
           image: jboss/keycloak:latest
+          args:
+            - "-Dkeycloak.profile.feature.scripts=enabled"
+            - "-Dkeycloak.profile.feature.upload_scripts=enabled"
           imagePullPolicy: IfNotPresent
           resources:
             requests:

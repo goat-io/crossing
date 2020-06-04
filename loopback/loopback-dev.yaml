@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loopback-http
+  name: loopback-dev-http
   namespace: formio
   labels:
-    app: loopback-http
+    app: loopback-dev-http
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: loopback-http
+      app: loopback-dev-http
   template:
     metadata:
       labels:
-        app: loopback-http
+        app: loopback-dev-http
     spec:
       imagePullSecrets:
         - name: regcred
       containers:
-        - name: loopback
-          image: registry.gitlab.com/goatlab/corporate/moutain/mountain/loopback:1.4
+        - name: loopback-dev
+          image: registry.gitlab.com/goatlab/corporate/moutain/mountain/loopback:1.5
           imagePullPolicy: Always
           env:
             # - name: DEBUG
@@ -147,23 +147,28 @@ spec:
             - name: PUSHER_APP_ID
               valueFrom:
                 secretKeyRef:
-                  name: pusher-secret
+                  name: pusher-dev-secret
                   key: PUSHER_APP_ID
             - name: PUSHER_APP_KEY
               valueFrom:
                 secretKeyRef:
-                  name: pusher-secret
+                  name: pusher-dev-secret
                   key: PUSHER_APP_KEY
             - name: PUSHER_APP_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: pusher-secret
+                  name: pusher-dev-secret
                   key: PUSHER_APP_SECRET
             - name: PUSHER_APP_CLUSTER
               valueFrom:
                 secretKeyRef:
-                  name: pusher-secret
+                  name: pusher-dev-secret
                   key: PUSHER_APP_CLUSTER
+            - name: SHOULD_BROADCAST
+              valueFrom:
+                secretKeyRef:
+                  name: pusher-dev-secret
+                  key: SHOULD_BROADCAST
             - name: PG_URL
               value: $(PG_SERVICE_NAME).$(PG_NAMESPACE)
             - name: MONGO_CONNECTION
@@ -175,10 +180,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: loopback-http
+  name: loopback-dev-http
   namespace: formio
   labels:
-    app: loopback-http
+    app: loopback-dev-http
   annotations:
     plugins.konghq.com: cors
     configuration.konghq.com: loopback-configuration
@@ -189,5 +194,5 @@ spec:
       targetPort: 3000
       protocol: TCP
   selector:
-    app: loopback-http
+    app: loopback-dev-http
   type: NodePort

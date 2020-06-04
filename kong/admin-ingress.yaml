@@ -8,14 +8,14 @@ metadata:
     ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   tls:
-  - hosts:
-    - admin.goatlab.dev
-    secretName: letsencrypt-clouddns
+    - hosts:
+        - admin.oneclinick.com
+      secretName: letsencrypt-clouddns
   rules:
-  - host: admin.goatlab.dev
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kong-ingress-controller
-          servicePort: 8001
+    - host: admin.oneclinick.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kong-ingress-controller
+              servicePort: 8001

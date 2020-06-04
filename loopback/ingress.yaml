@@ -9,8 +9,8 @@ route:
   preserve_host: true
   strip_path: true
   protocols:
-  - http
-  - https
+    - http
+    - https
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -19,18 +19,25 @@ metadata:
   namespace: formio
   annotations:
     kubernetes.io/ingress.class: kong
-    plugins.konghq.com: add-request-transformer, oidc-keycloak
+    plugins.konghq.com: add-request-transformer, oidc-loopback-keycloak
     configuration.konghq.com: loopback-configuration
 spec:
   tls:
-  - hosts:
-    - gateway.goatlab.dev
-    secretName: letsencrypt-clouddns
+    - hosts:
+        - gateway.oneclinick.com
+      secretName: letsencrypt-clouddns
   rules:
-  - host: gateway.goatlab.dev
-    http:
-      paths:
-      - path: /api/loopback
-        backend:
-          serviceName: loopback-http
-          servicePort: 3000
+    - host: gateway.oneclinick.com
+      http:
+        paths:
+          - path: /api/loopback-dev
+            backend:
+              serviceName: loopback-dev-http
+              servicePort: 3000
+    - host: gateway.oneclinick.com
+      http:
+        paths:
+          - path: /api/loopback
+            backend:
+              serviceName: loopback-prod-http
+              servicePort: 3000

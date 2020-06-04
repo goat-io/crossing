@@ -11,62 +11,62 @@ spec:
         app: kong
     spec:
       initContainers:
-      # hack to verify that the DB is up to date or not
-      # TODO remove this for Kong >= 0.15.0
-      - name: wait-for-migrations
-        image: kong:1.1
-        command: [ "/bin/sh", "-c", "kong migrations list" ]
-        env:
-        - name: KONG_ADMIN_LISTEN
-          value: 'off'
-        - name: KONG_PROXY_LISTEN
-          value: 'off'
-        - name: KONG_PROXY_ACCESS_LOG
-          value: "/dev/stdout"
-        - name: KONG_ADMIN_ACCESS_LOG
-          value: "/dev/stdout"
-        - name: KONG_PROXY_ERROR_LOG
-          value: "/dev/stderr"
-        - name: KONG_ADMIN_ERROR_LOG
-          value: "/dev/stderr"
-        - name: KONG_PG_HOST
-          value: postgres
-        - name: KONG_PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: kong-secret
-              key: pg_password
+        # hack to verify that the DB is up to date or not
+        # TODO remove this for Kong >= 0.15.0
+        - name: wait-for-migrations
+          image: kong:1.1
+          command: ["/bin/sh", "-c", "kong migrations list"]
+          env:
+            - name: KONG_ADMIN_LISTEN
+              value: "off"
+            - name: KONG_PROXY_LISTEN
+              value: "off"
+            - name: KONG_PROXY_ACCESS_LOG
+              value: "/dev/stdout"
+            - name: KONG_ADMIN_ACCESS_LOG
+              value: "/dev/stdout"
+            - name: KONG_PROXY_ERROR_LOG
+              value: "/dev/stderr"
+            - name: KONG_ADMIN_ERROR_LOG
+              value: "/dev/stderr"
+            - name: KONG_PG_HOST
+              value: postgres
+            - name: KONG_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kong-secret
+                  key: pg_password
       containers:
-      - name: kong-proxy
-        image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
-        imagePullPolicy: Always
-        env:
-        - name: KONG_PG_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: kong-secret
-              key: pg_password
-        - name: KONG_PG_HOST
-          value: postgres
-        - name: KONG_PROXY_ACCESS_LOG
-          value: "/dev/stdout"
-        - name: KONG_PROXY_ERROR_LOG
-          value: "/dev/stderr"
-        - name: KONG_ADMIN_LISTEN
-          value: 'off'
-        - name: KONG_PLUGINS
-          value: "bundled,oidc,kong-http-to-https-redirect"
-        ports:
-        - name: proxy
-          containerPort: 8000
-          protocol: TCP
-        - name: proxy-ssl
-          containerPort: 8443
-          protocol: TCP
-        lifecycle:
-          preStop:
-            exec:
-              command: [ "/bin/sh", "-c", "kong quit" ]
+        - name: kong-proxy
+          image: registry.gitlab.com/goatlab/corporate/kong-oidc:1.1.2
+          imagePullPolicy: Always
+          env:
+            - name: KONG_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kong-secret
+                  key: pg_password
+            - name: KONG_PG_HOST
+              value: postgres
+            - name: KONG_PROXY_ACCESS_LOG
+              value: "/dev/stdout"
+            - name: KONG_PROXY_ERROR_LOG
+              value: "/dev/stderr"
+            - name: KONG_ADMIN_LISTEN
+              value: "off"
+            - name: KONG_PLUGINS
+              value: "bundled,oidc,kong-http-to-https-redirect"
+          ports:
+            - name: proxy
+              containerPort: 8000
+              protocol: TCP
+            - name: proxy-ssl
+              containerPort: 8443
+              protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "kong quit"]
       imagePullSecrets:
         - name: regcred
 ---
@@ -78,14 +78,14 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: kong-proxy
-    port: 80
-    targetPort: 8000
-    protocol: TCP
-  - name: kong-proxy-ssl
-    port: 443
-    targetPort: 8443
-    protocol: TCP
-  loadBalancerIP: 35.222.213.192
+    - name: kong-proxy
+      port: 80
+      targetPort: 8000
+      protocol: TCP
+    - name: kong-proxy-ssl
+      port: 443
+      targetPort: 8443
+      protocol: TCP
+  loadBalancerIP: 34.67.166.77
   selector:
     app: kong

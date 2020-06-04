@@ -8,5 +8,8 @@ data:
   PUSHER_WEBHOOK_SECRET: pusher-goat-super-secret-awesome-key
   PUSHER_CHAT_INSTANCE_LOCATOR: v1:us1:0d2cee74-a01d-46bc-92ca-bf110a7642bd
   PUSHER_CHAT_KEY: 2061bd4b-f9de-4260-ba29-43101e9b99cd:nXeeXfonRge94KxWl0z4kj5vNB/6Mw96p7+SeCp1ko4=
-  KEYCLOAK_TOKEN_SECRET: LaXS1wm_8haNlHpXqF-x4Ou1M5V2TdMGZpixQsjUeBbWGsJFihKOobKFWgU9kZUrzhZr_GPHJdOVw9ssCtdB5A
-  LOOPBACK_BASE_URL: https://gateway.goatlab.dev/api/loopback
+  KEYCLOAK_TOKEN_SECRET: 1IQSeEVitLWNxauA7nvuLhhvBEQc4iGTHpYdlAA4z1Xb_0BzdqeFsFurZ7GQAAG_P4q-NjrsDXoEd43WOgnudg
+  LOOPBACK_BASE_URL: https://gateway.oneclinick.com/api/loopback-dev
+  KEYCLOAK_LOGIN_URL: https://keycloak.oneclinick.com/auth/realms/apps/protocol/openid-connect/token
+  KEYCLOAK_CLIENT_NAME: kong
+  KEYCLOAK_CLIENT_SECRET: 448966fd-5c2c-4229-b1a4-87b2e6e8c236

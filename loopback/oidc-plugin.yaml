@@ -1,11 +1,12 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: oidc-keycloak
+  name: oidc-loopback-keycloak
   namespace: formio
 config:
-  client_id: kong
-  client_secret: 448966fd-5c2c-4229-b1a4-87b2e6e8c236
+  client_id: loopback
+  client_secret: 95afa20e-e96f-430c-b1e6-b1a7ab2c738b
+  bearer_only: "yes"
   discovery: https://keycloak.oneclinick.com/auth/realms/apps/.well-known/openid-configuration
   access_token_header_name: Authorization
   access_token_header_as_bearer: "yes"

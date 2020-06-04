@@ -4,22 +4,22 @@ metadata:
   name: keycloak-example
   namespace: keycloak
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class: nginx
     ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   tls:
-  - hosts:
-    - keycloak.goatlab.dev
-    secretName: letsencrypt-clouddns
+    - hosts:
+        - keycloak.oneclinick.com
+      secretName: letsencrypt-clouddns
   rules:
-  - host: keycloak.goatlab.dev
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: keycloak-http
-          servicePort: 8080
-      - path: /auth
-        backend:
-          serviceName: keycloak-http
-          servicePort: 8080
+    - host: keycloak.oneclinick.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: keycloak-http
+              servicePort: 8080
+          - path: /auth
+            backend:
+              serviceName: keycloak-http
+              servicePort: 8080

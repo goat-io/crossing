@@ -9,5 +9,6 @@ data:
   DEBUG: "*"
   UPLOAD_DIR: 1ck
   PROVIDERS: google
-  GOOGLE_CLOUD_PROJECT_ID: named-griffin-235117
-  GOOGLE_CLOUD_BUCKET_NAME: goatlab-dev-uploads
+  GOOGLE_CLOUD_PROJECT_ID: ck-prod-274721
+  GOOGLE_CLOUD_BUCKET_NAME: oneclinick-uploads
+  MAX_UPLOAD_SIZE: 50mb

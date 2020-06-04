@@ -53,6 +53,11 @@ spec:
                 secretKeyRef:
                   name: upload-secret
                   key: GOOGLE_CLOUD_BUCKET_NAME
+            - name: MAX_UPLOAD_SIZE
+              valueFrom:
+                secretKeyRef:
+                  name: upload-secret
+                  key: MAX_UPLOAD_SIZE
 ---
 apiVersion: v1
 kind: Service

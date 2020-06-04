@@ -5,8 +5,8 @@ metadata:
   namespace: dummy
 config:
   client_id: kong
-  client_secret: 4a871543-8546-45df-9b8d-00bd09939253
-  discovery: https://keycloak.goatlab.dev/auth/realms/apps/.well-known/openid-configuration
+  client_secret: 448966fd-5c2c-4229-b1a4-87b2e6e8c236
+  discovery: https://keycloak.oneclinick.com/auth/realms/apps/.well-known/openid-configuration
   access_token_header_name: x-jwt-token
   access_token_header_as_bearer: "yes"
   disable_userinfo_header: "no"

@@ -7,8 +7,8 @@ route:
   preserve_host: true
   strip_path: true
   protocols:
-  - http
-  - https
+    - http
+    - https
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -22,10 +22,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - gateway.goatlab.dev
+        - gateway.oneclinick.com
       secretName: letsencrypt-clouddns
   rules:
-    - host: gateway.goatlab.dev
+    - host: gateway.oneclinick.com
       http:
         paths:
           - path: /api/formio

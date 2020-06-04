@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pusher-dev-secret
+  namespace: formio
+type: Opaque
+data:
+  PUSHER_APP_ID: OTg5OTMx
+  PUSHER_APP_KEY: ZjY4ZTYxMmMwNzI0ZGIxMzc4MzA=
+  PUSHER_APP_SECRET: MTJkNDg4MWI3NzZkNzY5YTE2Y2I=
+  PUSHER_APP_CLUSTER: dXMy
+  SHOULD_BROADCAST: VHJ1ZQ==

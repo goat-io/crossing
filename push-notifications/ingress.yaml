@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - push.goatlab.dev
+        - push.oneclinick.com
       secretName: letsencrypt-clouddns
   rules:
-    - host: push.goatlab.dev
+    - host: push.oneclinick.com
       http:
         paths:
           - path: /

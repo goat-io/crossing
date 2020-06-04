@@ -1,0 +1,198 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loopback-prod-http
+  namespace: formio
+  labels:
+    app: loopback-prod-http
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loopback-prod-http
+  template:
+    metadata:
+      labels:
+        app: loopback-prod-http
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: loopback-prod-dev
+          image: registry.gitlab.com/goatlab/corporate/moutain/mountain/loopback:1.5
+          imagePullPolicy: Always
+          env:
+            # - name: DEBUG
+            #   value: '*'
+            - name: MONGO_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_PORT
+            - name: MONGO_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_USER
+            - name: MONGO_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_PASSWORD
+            - name: MONGO_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_NAME
+            - name: MONGO_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: MONGO_DB_HOST
+            - name: FORMIO_PROTOCOL
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_PROTOCOL
+            - name: FORMIO_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_HOST
+            - name: FORMIO_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_PORT
+            - name: FORMIO_BASE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: FORMIO_BASE_PATH
+            - name: ROOT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: ROOT_EMAIL
+            - name: ROOT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: ROOT_PASS
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: JWT_SECRET
+            - name: JWT_SECRET_BUFFER
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: JWT_SECRET_BUFFER
+            - name: LB_SKIP_JWT
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: LB_SKIP_JWT
+            - name: KEYCLOAK_ENABLED
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: KEYCLOAK_ENABLED
+            - name: KEYCLOAK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: KEYCLOAK_URL
+            - name: KEYCLOAK_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: KEYCLOAK_CLIENT_ID
+            - name: KEYCLOAK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: KEYCLOAK_SECRET
+            - name: KEYCLOAK_REALM
+              valueFrom:
+                secretKeyRef:
+                  name: formio-secret
+                  key: KEYCLOAK_REALM
+            - name: PG_SERVICE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: PG_SERVICE_NAME
+            - name: PG_NAMESPACE
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: PG_NAMESPACE
+            - name: PG_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: PG_DB_USER
+            - name: PG_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: PG_DB_PASSWORD
+            - name: PG_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: PG_DB_NAME
+            - name: PUSHER_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: pusher-prod-secret
+                  key: PUSHER_APP_ID
+            - name: PUSHER_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pusher-prod-secret
+                  key: PUSHER_APP_KEY
+            - name: PUSHER_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: pusher-prod-secret
+                  key: PUSHER_APP_SECRET
+            - name: PUSHER_APP_CLUSTER
+              valueFrom:
+                secretKeyRef:
+                  name: pusher-prod-secret
+                  key: PUSHER_APP_CLUSTER
+            - name: SHOULD_BROADCAST
+              valueFrom:
+                secretKeyRef:
+                  name: pusher-prod-secret
+                  key: SHOULD_BROADCAST
+            - name: PG_URL
+              value: $(PG_SERVICE_NAME).$(PG_NAMESPACE)
+            - name: MONGO_CONNECTION
+              value: mongodb://$(MONGO_DB_USER):$(MONGO_DB_PASSWORD)@$(MONGO_DB_HOST):$(MONGO_PORT)/$(MONGO_DB_NAME)
+          ports:
+            - name: port
+              containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loopback-prod-http
+  namespace: formio
+  labels:
+    app: loopback-prod-http
+  annotations:
+    plugins.konghq.com: cors
+    configuration.konghq.com: loopback-configuration
+spec:
+  ports:
+    - name: loopback-port
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: loopback-prod-http
+  type: NodePort

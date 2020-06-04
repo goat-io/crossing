@@ -9,16 +9,15 @@ metadata:
     ingress.kubernetes.io/force-ssl-redirect: "false"
 spec:
   tls:
-  - hosts:
-    - '*.goatlab.dev'
-    - 35.222.213.192.nip.io
-    secretName: tls-kong
+    - hosts:
+        - gateway.oneclinick.com
+        # - 35.184.13.185.nip.io
+      secretName: letsencrypt-clouddns
   rules:
-  - host: gateway.goatlab.dev
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kong-proxy
-          servicePort: 443
-    
+    - host: gateway.oneclinick.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kong-proxy
+              servicePort: 443

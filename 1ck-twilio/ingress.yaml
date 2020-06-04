@@ -8,14 +8,14 @@ metadata:
     ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   tls:
-  - hosts:
-    - twilio.goatlab.dev
-    secretName: letsencrypt-clouddns
+    - hosts:
+        - twilio.oneclinick.com
+      secretName: letsencrypt-clouddns
   rules:
-  - host: twilio.goatlab.dev
-    http:
-      paths:
-      - path: /token
-        backend:
-          serviceName: twilio-1ck-svc
-          servicePort: 80
+    - host: twilio.oneclinick.com
+      http:
+        paths:
+          - path: /token
+            backend:
+              serviceName: twilio-1ck-svc
+              servicePort: 80

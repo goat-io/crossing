@@ -8,14 +8,14 @@ metadata:
     ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   tls:
-  - hosts:
-    - pusher-dev.goatlab.dev
-    secretName: letsencrypt-clouddns
+    - hosts:
+        - pusher-dev.oneclinick.com
+      secretName: letsencrypt-clouddns
   rules:
-  - host: pusher-dev.goatlab.dev
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: pusher-1ck-svc
-          servicePort: 80
+    - host: pusher-dev.oneclinick.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: pusher-1ck-svc
+              servicePort: 80
